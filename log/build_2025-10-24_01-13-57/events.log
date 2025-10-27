@@ -1,0 +1,93 @@
+[0.000000] (-) TimerEvent: {}
+[0.002364] (my_multi_plot) JobQueued: {'identifier': 'my_multi_plot', 'dependencies': OrderedDict()}
+[0.003067] (my_multi_plot) JobStarted: {'identifier': 'my_multi_plot'}
+[0.099275] (-) TimerEvent: {}
+[0.200633] (-) TimerEvent: {}
+[0.304487] (-) TimerEvent: {}
+[0.409974] (-) TimerEvent: {}
+[0.511101] (-) TimerEvent: {}
+[0.612676] (-) TimerEvent: {}
+[0.713861] (-) TimerEvent: {}
+[0.815095] (-) TimerEvent: {}
+[0.916258] (-) TimerEvent: {}
+[1.018238] (-) TimerEvent: {}
+[1.120739] (-) TimerEvent: {}
+[1.222541] (-) TimerEvent: {}
+[1.324753] (-) TimerEvent: {}
+[1.427266] (-) TimerEvent: {}
+[1.529901] (-) TimerEvent: {}
+[1.633194] (-) TimerEvent: {}
+[1.734127] (-) TimerEvent: {}
+[1.835217] (-) TimerEvent: {}
+[1.937382] (-) TimerEvent: {}
+[2.039094] (-) TimerEvent: {}
+[2.140118] (-) TimerEvent: {}
+[2.241479] (-) TimerEvent: {}
+[2.342462] (-) TimerEvent: {}
+[2.445882] (-) TimerEvent: {}
+[2.548335] (-) TimerEvent: {}
+[2.649243] (-) TimerEvent: {}
+[2.752268] (-) TimerEvent: {}
+[2.853752] (-) TimerEvent: {}
+[2.954942] (-) TimerEvent: {}
+[3.056516] (-) TimerEvent: {}
+[3.157548] (-) TimerEvent: {}
+[3.262216] (-) TimerEvent: {}
+[3.365219] (-) TimerEvent: {}
+[3.466887] (-) TimerEvent: {}
+[3.503697] (my_multi_plot) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'develop', '--editable', '--build-directory', '/workspace/build/my_multi_plot/build', '--no-deps', 'symlink_data'], 'cwd': '/workspace/build/my_multi_plot', 'env': {'HOSTNAME': 'raspberrypi', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib', 'HOME': '/root', 'OLDPWD': '/workspace/src', 'ROS_PYTHON_VERSION': '3', 'COLCON_PREFIX_PATH': '/workspace/install', 'ROS_DISTRO': 'humble', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'TERM': 'xterm', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'LANG': 'C.UTF-8', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'AMENT_PREFIX_PATH': '/workspace/install/my_multi_plot:/opt/ros/humble', 'PWD': '/workspace/build/my_multi_plot', 'LC_ALL': 'C.UTF-8', 'PYTHONPATH': '/workspace/build/my_multi_plot/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/my_multi_plot/lib/python3.10/site-packages:/workspace/build/my_multi_plot:/workspace/install/my_multi_plot/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'COLCON': '1'}, 'shell': False}
+[3.567084] (-) TimerEvent: {}
+[3.673274] (-) TimerEvent: {}
+[3.774493] (-) TimerEvent: {}
+[3.875570] (-) TimerEvent: {}
+[3.976373] (-) TimerEvent: {}
+[4.077945] (-) TimerEvent: {}
+[4.179268] (-) TimerEvent: {}
+[4.280070] (-) TimerEvent: {}
+[4.381100] (-) TimerEvent: {}
+[4.482033] (-) TimerEvent: {}
+[4.584544] (-) TimerEvent: {}
+[4.686048] (-) TimerEvent: {}
+[4.787704] (-) TimerEvent: {}
+[4.890387] (-) TimerEvent: {}
+[4.992000] (-) TimerEvent: {}
+[5.071996] (my_multi_plot) StdoutLine: {'line': b'running develop\n'}
+[5.092252] (-) TimerEvent: {}
+[5.193856] (-) TimerEvent: {}
+[5.297232] (-) TimerEvent: {}
+[5.398742] (-) TimerEvent: {}
+[5.502130] (-) TimerEvent: {}
+[5.603006] (-) TimerEvent: {}
+[5.704256] (-) TimerEvent: {}
+[5.809606] (-) TimerEvent: {}
+[5.910565] (-) TimerEvent: {}
+[5.923571] (my_multi_plot) StdoutLine: {'line': b'running egg_info\n'}
+[5.924612] (my_multi_plot) StdoutLine: {'line': b'creating my_multi_plot.egg-info\n'}
+[5.929352] (my_multi_plot) StdoutLine: {'line': b'writing my_multi_plot.egg-info/PKG-INFO\n'}
+[5.930410] (my_multi_plot) StdoutLine: {'line': b'writing dependency_links to my_multi_plot.egg-info/dependency_links.txt\n'}
+[5.931028] (my_multi_plot) StdoutLine: {'line': b'writing entry points to my_multi_plot.egg-info/entry_points.txt\n'}
+[5.933246] (my_multi_plot) StdoutLine: {'line': b'writing requirements to my_multi_plot.egg-info/requires.txt\n'}
+[5.934008] (my_multi_plot) StdoutLine: {'line': b'writing top-level names to my_multi_plot.egg-info/top_level.txt\n'}
+[5.934583] (my_multi_plot) StdoutLine: {'line': b"writing manifest file 'my_multi_plot.egg-info/SOURCES.txt'\n"}
+[5.945237] (my_multi_plot) StdoutLine: {'line': b"reading manifest file 'my_multi_plot.egg-info/SOURCES.txt'\n"}
+[5.948019] (my_multi_plot) StdoutLine: {'line': b"writing manifest file 'my_multi_plot.egg-info/SOURCES.txt'\n"}
+[5.958916] (my_multi_plot) StdoutLine: {'line': b'running build_ext\n'}
+[5.959852] (my_multi_plot) StdoutLine: {'line': b'Creating /workspace/install/my_multi_plot/lib/python3.10/site-packages/my-multi-plot.egg-link (link to .)\n'}
+[5.966911] (my_multi_plot) StdoutLine: {'line': b'Installing plot_listener script to /workspace/install/my_multi_plot/lib/my_multi_plot\n'}
+[5.973174] (my_multi_plot) StdoutLine: {'line': b'Installing sht40_logger script to /workspace/install/my_multi_plot/lib/my_multi_plot\n'}
+[5.973984] (my_multi_plot) StdoutLine: {'line': b'\n'}
+[5.974639] (my_multi_plot) StdoutLine: {'line': b'Installed /workspace/build/my_multi_plot\n'}
+[5.975188] (my_multi_plot) StdoutLine: {'line': b'running symlink_data\n'}
+[5.975764] (my_multi_plot) StdoutLine: {'line': b'creating /workspace/install/my_multi_plot/share/ament_index\n'}
+[5.981285] (my_multi_plot) StdoutLine: {'line': b'creating /workspace/install/my_multi_plot/share/ament_index/resource_index\n'}
+[5.982133] (my_multi_plot) StdoutLine: {'line': b'creating /workspace/install/my_multi_plot/share/ament_index/resource_index/packages\n'}
+[5.982772] (my_multi_plot) StdoutLine: {'line': b'symbolically linking /workspace/build/my_multi_plot/resource/my_multi_plot -> /workspace/install/my_multi_plot/share/ament_index/resource_index/packages\n'}
+[5.983520] (my_multi_plot) StdoutLine: {'line': b'symbolically linking /workspace/build/my_multi_plot/package.xml -> /workspace/install/my_multi_plot/share/my_multi_plot\n'}
+[5.984277] (my_multi_plot) StdoutLine: {'line': b'creating /workspace/install/my_multi_plot/share/my_multi_plot/launch\n'}
+[5.993385] (my_multi_plot) StdoutLine: {'line': b'symbolically linking /workspace/build/my_multi_plot/launch/plot_listener.launch.py -> /workspace/install/my_multi_plot/share/my_multi_plot/launch\n'}
+[6.010918] (-) TimerEvent: {}
+[6.117779] (-) TimerEvent: {}
+[6.170444] (my_multi_plot) CommandEnded: {'returncode': 0}
+[6.221631] (-) TimerEvent: {}
+[6.293933] (my_multi_plot) JobEnded: {'identifier': 'my_multi_plot', 'rc': 0}
+[6.299010] (-) EventReactorShutdown: {}

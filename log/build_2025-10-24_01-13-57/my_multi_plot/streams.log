@@ -1,0 +1,27 @@
+[3.510s] Invoking command in '/workspace/build/my_multi_plot': PYTHONPATH=/workspace/build/my_multi_plot/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/my_multi_plot/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /workspace/build/my_multi_plot/build --no-deps symlink_data
+[5.069s] running develop
+[5.921s] running egg_info
+[5.922s] creating my_multi_plot.egg-info
+[5.927s] writing my_multi_plot.egg-info/PKG-INFO
+[5.928s] writing dependency_links to my_multi_plot.egg-info/dependency_links.txt
+[5.928s] writing entry points to my_multi_plot.egg-info/entry_points.txt
+[5.931s] writing requirements to my_multi_plot.egg-info/requires.txt
+[5.931s] writing top-level names to my_multi_plot.egg-info/top_level.txt
+[5.932s] writing manifest file 'my_multi_plot.egg-info/SOURCES.txt'
+[5.943s] reading manifest file 'my_multi_plot.egg-info/SOURCES.txt'
+[5.945s] writing manifest file 'my_multi_plot.egg-info/SOURCES.txt'
+[5.956s] running build_ext
+[5.957s] Creating /workspace/install/my_multi_plot/lib/python3.10/site-packages/my-multi-plot.egg-link (link to .)
+[5.964s] Installing plot_listener script to /workspace/install/my_multi_plot/lib/my_multi_plot
+[5.970s] Installing sht40_logger script to /workspace/install/my_multi_plot/lib/my_multi_plot
+[5.971s] 
+[5.972s] Installed /workspace/build/my_multi_plot
+[5.972s] running symlink_data
+[5.973s] creating /workspace/install/my_multi_plot/share/ament_index
+[5.979s] creating /workspace/install/my_multi_plot/share/ament_index/resource_index
+[5.979s] creating /workspace/install/my_multi_plot/share/ament_index/resource_index/packages
+[5.980s] symbolically linking /workspace/build/my_multi_plot/resource/my_multi_plot -> /workspace/install/my_multi_plot/share/ament_index/resource_index/packages
+[5.981s] symbolically linking /workspace/build/my_multi_plot/package.xml -> /workspace/install/my_multi_plot/share/my_multi_plot
+[5.982s] creating /workspace/install/my_multi_plot/share/my_multi_plot/launch
+[5.991s] symbolically linking /workspace/build/my_multi_plot/launch/plot_listener.launch.py -> /workspace/install/my_multi_plot/share/my_multi_plot/launch
+[6.168s] Invoked command in '/workspace/build/my_multi_plot' returned '0': PYTHONPATH=/workspace/build/my_multi_plot/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/my_multi_plot/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /workspace/build/my_multi_plot/build --no-deps symlink_data

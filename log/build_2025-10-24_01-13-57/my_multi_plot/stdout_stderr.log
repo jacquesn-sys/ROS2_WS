@@ -1,0 +1,25 @@
+running develop
+running egg_info
+creating my_multi_plot.egg-info
+writing my_multi_plot.egg-info/PKG-INFO
+writing dependency_links to my_multi_plot.egg-info/dependency_links.txt
+writing entry points to my_multi_plot.egg-info/entry_points.txt
+writing requirements to my_multi_plot.egg-info/requires.txt
+writing top-level names to my_multi_plot.egg-info/top_level.txt
+writing manifest file 'my_multi_plot.egg-info/SOURCES.txt'
+reading manifest file 'my_multi_plot.egg-info/SOURCES.txt'
+writing manifest file 'my_multi_plot.egg-info/SOURCES.txt'
+running build_ext
+Creating /workspace/install/my_multi_plot/lib/python3.10/site-packages/my-multi-plot.egg-link (link to .)
+Installing plot_listener script to /workspace/install/my_multi_plot/lib/my_multi_plot
+Installing sht40_logger script to /workspace/install/my_multi_plot/lib/my_multi_plot
+
+Installed /workspace/build/my_multi_plot
+running symlink_data
+creating /workspace/install/my_multi_plot/share/ament_index
+creating /workspace/install/my_multi_plot/share/ament_index/resource_index
+creating /workspace/install/my_multi_plot/share/ament_index/resource_index/packages
+symbolically linking /workspace/build/my_multi_plot/resource/my_multi_plot -> /workspace/install/my_multi_plot/share/ament_index/resource_index/packages
+symbolically linking /workspace/build/my_multi_plot/package.xml -> /workspace/install/my_multi_plot/share/my_multi_plot
+creating /workspace/install/my_multi_plot/share/my_multi_plot/launch
+symbolically linking /workspace/build/my_multi_plot/launch/plot_listener.launch.py -> /workspace/install/my_multi_plot/share/my_multi_plot/launch

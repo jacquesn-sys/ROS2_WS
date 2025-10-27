@@ -1,0 +1,4 @@
+[console_scripts]
+plot_listener = my_multi_plot.plot_listener:main
+sht40_logger = my_multi_plot.sht40_arduino_ros_logger:main
+
