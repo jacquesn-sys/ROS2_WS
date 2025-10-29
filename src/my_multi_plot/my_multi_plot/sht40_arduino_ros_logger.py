@@ -24,6 +24,9 @@ from rclpy.node import Node  # Base class for ROS 2 nodes
 from rclpy.qos import QoSHistoryPolicy, QoSProfile, QoSReliabilityPolicy  # QoS for topics
 from std_msgs.msg import Float32              # Message type for temperature/humidity
 
+from my_multi_plot.utils.influxdb import InfluxCollector
+from my_multi_plot.components.secrets import influx_secret
+
 # Use non-GUI (headless) matplotlib backend for environments without display
 import matplotlib
 if "DISPLAY" not in os.environ:
@@ -68,15 +71,33 @@ class MultiBoardPlotNode(Node):
                  results_dir: str,
                  pair_tolerance_s: float,
                  stale_timeout_s: float,
-                 csv_flush_every: int):
+                 csv_flush_every: int,
+                 cloud: bool = False,
+                 no_csv: bool = False,
+                 no_png: bool = False):
         super().__init__('multi_board_plot_listener')
+
+        self.no_csv = no_csv
+        self.no_png = no_png
+
+        # Cloud sender (optional)
+        self.influx = None
+        if cloud:
+            tags = {"device": "ROS2_PI_SHT40"}  # adjust as needed
+            self.influx = InfluxCollector(tags, influx_secret)
+            self.influx.start_send_thread()
+            self.get_logger().info("Cloud upload: ON")
 
         # ---- Folder setup ----
         self.results_root = results_dir
         self.data_dir = os.path.join(self.results_root, "data")
         self.plots_dir = os.path.join(self.results_root, "plots")
-        os.makedirs(self.data_dir, exist_ok=True)   # Create Results/data folder
-        os.makedirs(self.plots_dir, exist_ok=True)  # Create Results/plots folder
+        if not self.no_csv:
+            os.makedirs(self.data_dir, exist_ok=True) # Create Results/data folder
+        if not self.no_png:
+            os.makedirs(self.plots_dir, exist_ok=True) # Create Results/plots folder
+        # os.makedirs(self.data_dir, exist_ok=True)   
+        # os.makedirs(self.plots_dir, exist_ok=True)  
 
         # Record start time for naming output files later
         self.run_started_ts = time.time()
@@ -90,7 +111,7 @@ class MultiBoardPlotNode(Node):
 
         # QoS (Quality of Service) for reliable topic subscription
         self.qos = QoSProfile(
-            reliability=QoSReliabilityPolicy.BEST_EFFORT,  # Drop old messages if needed
+            reliability=QoSReliabilityPolicy.RELIABLE,  # Reliable delivery (no intentional drops)
             history=QoSHistoryPolicy.KEEP_LAST,
             depth=10
         )
@@ -120,11 +141,15 @@ class MultiBoardPlotNode(Node):
         self.flush_timer = self.create_timer(0.5, self._flush_stale_unpaired)
 
         # Startup log message
+        csv_msg = (f"Saving CSVs in {self.data_dir}; " if not self.no_csv else "NOT saving CSVs; ")
+        png_msg = (f"PNG in {self.plots_dir}. " if not self.no_png else "NOT saving PNG. ")
+        cloud_msg = ("Cloud upload ON. " if self.influx else "")
         self.get_logger().info(
             "Ready. Watching '<device>/temperature' & '<device>/humidity'. "
-            f"Saving CSVs in {self.data_dir}, PNG in {self.plots_dir}. "
+            f"{csv_msg}{png_msg}{cloud_msg}"
             f"Pair tolerance={self.pair_tolerance_s}s; stale timeout={self.stale_timeout_s}s."
         )
+
 
     # ---------------------------------------------------------------------
     # Discovery — subscribe to any new temperature/humidity topics
@@ -159,8 +184,10 @@ class MultiBoardPlotNode(Node):
             self._ensure_csv_for_device(device)
 
     def _ensure_csv_for_device(self, device: str):
-        """Open a temporary CSV file for this device and write header row."""
+        """Optional -- Open a temporary CSV file for this device and write header row."""
         if device in self.csv_handles:
+            return
+        if self.no_csv:
             return
         tmp_path = os.path.join(self.data_dir, f"tmp_{device}.csv")
         fh = open(tmp_path, "w", newline="")
@@ -222,19 +249,39 @@ class MultiBoardPlotNode(Node):
     # ---------------------------------------------------------------------
 
     def _write_row(self, device: str, ts: float, hum: Optional[float], temp: Optional[float]):
-        """Write a single row to the device CSV file."""
-        handle = self.csv_handles.get(device)
-        if not handle:
-            self._ensure_csv_for_device(device)
-            handle = self.csv_handles[device]
-        # Write timestamp and data (empty string if None)
-        handle.writer.writerow([ts, "" if hum is None else hum, "" if temp is None else temp])
-        handle.rows_since_flush += 1
+        """Write a single row to the device CSV file and (optionally) upload."""
+        # 1) Local CSV (optional)
+        if not self.no_csv:
+            handle = self.csv_handles.get(device)
+            if not handle:
+                self._ensure_csv_for_device(device)
+                handle = self.csv_handles[device]
+            handle.writer.writerow([ts,
+                                    "" if hum is None else hum,
+                                    "" if temp is None else temp])
+            handle.rows_since_flush += 1
+            if handle.rows_since_flush >= self.csv_flush_every:
+                try:
+                    handle.fh.flush()
+                except Exception:
+                    pass
+                handle.rows_since_flush = 0
 
-        # Flush to disk every N rows to avoid data loss
-        if handle.rows_since_flush >= self.csv_flush_every:
-            handle.fh.flush()
-            handle.rows_since_flush = 0
+        # 2) Cloud upload (optional)
+        if self.influx:
+            fields = {}
+            if hum is not None:
+                fields["humidity"] = float(hum)
+            if temp is not None:
+                fields["temperature"] = float(temp)
+
+            # Only send if we have at least one field
+            if fields:
+                self.influx.record_fields_tags(
+                    measurement="sht40_readings",
+                    fields=fields,
+                    tags={"device": device}
+                )
 
     # ---------------------------------------------------------------------
     # Data cleanup — remove old points from memory
@@ -263,10 +310,10 @@ class MultiBoardPlotNode(Node):
         ax_temp = fig.add_subplot(gs[0, 0])
         ax_hum  = fig.add_subplot(gs[1, 0])
 
-        now = time.time()
+        # now = time.time()
         any_data = False
 
-                # --- Temperature plot ---
+        # --- Temperature plot ---
         x_max_temp = 0.0
         any_data = False
         for device, series in self.series_temp.items():
@@ -320,8 +367,8 @@ class MultiBoardPlotNode(Node):
 
         end_ts = time.time()
         # Save final plot
-        self._save_plot_once(end_ts)
-
+        if not self.no_png:
+            self._save_plot_once(end_ts)
         # Rename temporary CSV files with start and end timestamps
         end_tag = time.strftime("%Y%m%d-%H%M%S", time.localtime(end_ts))
         for device, handle in list(self.csv_handles.items()):
@@ -338,6 +385,13 @@ class MultiBoardPlotNode(Node):
             except Exception as e:
                 self.get_logger().warn(f"Failed to rename CSV for {device}: {e}")
 
+        # Stop Influx thread cleanly
+        if self.influx:
+            try:
+                self.influx.stop_send_thread()
+            except Exception:
+                pass
+
         super().destroy_node()
 
 # ---------------------------------------------------------------------
@@ -352,17 +406,27 @@ def main():
     parser.add_argument("--pair-tolerance-s", type=float, default=0.2, help="Pairing time tolerance (s).")
     parser.add_argument("--stale-timeout-s", type=float, default=2.0, help="How long to wait before writing unpaired sample (s).")
     parser.add_argument("--csv-flush-every", type=int, default=20, help="Flush CSV after this many rows.")
+    parser.add_argument("--cloud", action="store_true",
+                    help="Enable upload to InfluxDB")
+    parser.add_argument("--no-csv", action="store_true",
+                    help="Disable writing CSVs")
+    parser.add_argument("--no-png", action="store_true",
+                    help="Disable final PNG plot")
+
 
     args, unknown = parser.parse_known_args()
     rclpy.init(args=unknown)
 
     # Create and run the node
     node = MultiBoardPlotNode(
-        window_seconds=args.window_seconds,
-        results_dir=args.results_dir,
-        pair_tolerance_s=args.pair_tolerance_s,
-        stale_timeout_s=args.stale_timeout_s,
-        csv_flush_every=args.csv_flush_every,
+    window_seconds=args.window_seconds,
+    results_dir=args.results_dir,
+    pair_tolerance_s=args.pair_tolerance_s,
+    stale_timeout_s=args.stale_timeout_s,
+    csv_flush_every=args.csv_flush_every,
+    cloud=args.cloud,
+    no_csv=args.no_csv,
+    no_png=args.no_png,
     )
 
     try:
@@ -370,9 +434,12 @@ def main():
     except KeyboardInterrupt:
         pass
     finally:
-        if rclpy.ok():
-            rclpy.shutdown()
-        node.destroy_node()  # Ensure files and plots are saved
+        # Graceful teardown: destroy node first, then shutdown ROS
+        try:
+            node.destroy_node()
+        finally:
+            if rclpy.ok():
+                rclpy.shutdown()
 
 if __name__ == "__main__":
     main()
